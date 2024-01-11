@@ -8,10 +8,13 @@
 // Execute `rustlings hint traits3` or use the `hint` watch subcommand for a
 // hint.
 
-// I AM NOT DONE
+
 
 pub trait Licensed {
-    fn licensing_info(&self) -> String;
+    // create a generic function here that will be used in both structs
+    fn licensing_info(&self) -> String {
+        format!("Some information")
+    }
 }
 
 struct SomeSoftware {

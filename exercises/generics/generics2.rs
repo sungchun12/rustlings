@@ -6,14 +6,16 @@
 // Execute `rustlings hint generics2` or use the `hint` watch subcommand for a
 // hint.
 
-// I AM NOT DONE
 
-struct Wrapper {
-    value: u32,
+
+struct Wrapper<T> { // T stands for type and is a generic type parameter
+    value: T,
 }
 
-impl Wrapper {
-    pub fn new(value: u32) -> Self {
+// syntax to accept generic type parameters when implementing functions for this struct
+// https://doc.rust-lang.org/stable/book/ch10-01-syntax.html#in-method-definitions
+impl<T> Wrapper<T> {
+    pub fn new(value: T) -> Self {
         Wrapper { value }
     }
 }
