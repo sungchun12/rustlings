@@ -12,6 +12,7 @@
 
 pub trait Licensed {
     // create a generic function here that will be used in both structs
+    // feels akin to python inheritance with super()
     fn licensing_info(&self) -> String {
         format!("Some information")
     }
