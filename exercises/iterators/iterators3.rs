@@ -9,7 +9,9 @@
 // Execute `rustlings hint iterators3` or use the `hint` watch subcommand for a
 // hint.
 
-// I AM NOT DONE
+
+
+use std::fmt::Result;
 
 #[derive(Debug, PartialEq, Eq)]
 pub enum DivisionError {
@@ -25,25 +27,46 @@ pub struct NotDivisibleError {
 
 // Calculate `a` divided by `b` if `a` is evenly divisible by `b`.
 // Otherwise, return a suitable error.
-pub fn divide(a: i32, b: i32) -> Result<i32, DivisionError> {
-    todo!();
+pub fn divide(a: i32, b: i32) -> std::result::Result<i32, DivisionError> {
+    if b == 0 {
+        Err(DivisionError::DivideByZero)
+    } else if a % b == 0 {
+        Ok(a / b)
+    } else {
+        Err(DivisionError::NotDivisible(NotDivisibleError {
+            dividend: a,
+            divisor: b,
+        }))
+    }
 }
 
 // Complete the function and return a value of the correct type so the test
 // passes.
 // Desired output: Ok([1, 11, 1426, 3])
-fn result_with_list() -> () {
-    let numbers = vec![27, 297, 38502, 81];
-    let division_results = numbers.into_iter().map(|n| divide(n, 27));
+fn result_with_list() -> std::result::Result<Vec<i32>, DivisionError> {
+    let numbers: Vec<i32> = vec![27, 297, 38502, 81];
+    let division_results = numbers.into_iter().map(|n: i32| divide(n, 27));
+
+    let collected_results: std::result::Result<Vec<_>, _> = division_results.collect();
+
+    collected_results
 }
+
 
 // Complete the function and return a value of the correct type so the test
 // passes.
 // Desired output: [Ok(1), Ok(11), Ok(1426), Ok(3)]
-fn list_of_results() -> () {
+//. The function ﻿list_of_results maps the ﻿divide(n, 27) function over a vector of numbers, creating an iterator with ﻿Result values (﻿Ok or ﻿Err). This iterator is then collected into a ﻿Vec of ﻿Result values.
+// Vec is not the same thing as list in python. Rust does NOT have lists
+fn list_of_results() -> Vec<std::result::Result<i32, DivisionError>> {
     let numbers = vec![27, 297, 38502, 81];
-    let division_results = numbers.into_iter().map(|n| divide(n, 27));
+    let division_results = numbers.into_iter().map(|n: i32| divide(n, 27));
+
+    let collected_results: Vec<_> = division_results.collect();
+
+    collected_results // directly return the collected results
 }
+
 
 #[cfg(test)]
 mod tests {
