@@ -3,7 +3,7 @@
 // Execute `rustlings hint threads3` or use the `hint` watch subcommand for a
 // hint.
 
-// I AM NOT DONE
+
 
 // mpsc stands for multiple producer, single consumer
 // https://doc.rust-lang.org/book/ch16-02-message-passing.html
@@ -18,6 +18,7 @@ struct Queue {
     second_half: Vec<u32>,
 }
 
+// implements a queue with two threads
 impl Queue {
     fn new() -> Self {
         Queue {
