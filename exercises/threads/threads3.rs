@@ -5,6 +5,8 @@
 
 // I AM NOT DONE
 
+// mpsc stands for multiple producer, single consumer
+// https://doc.rust-lang.org/book/ch16-02-message-passing.html
 use std::sync::mpsc;
 use std::sync::Arc;
 use std::thread;
@@ -27,6 +29,8 @@ impl Queue {
 }
 
 fn send_tx(q: Queue, tx: mpsc::Sender<u32>) -> () {
+    // I need to clone the thread to send it to the other thread because there are multiple producers
+    let _tx1 = tx.clone();
     let qc = Arc::new(q);
     let qc1 = Arc::clone(&qc);
     let qc2 = Arc::clone(&qc);
@@ -42,7 +46,7 @@ fn send_tx(q: Queue, tx: mpsc::Sender<u32>) -> () {
     thread::spawn(move || {
         for val in &qc2.second_half {
             println!("sending {:?}", val);
-            tx.send(*val).unwrap();
+            _tx1.send(*val).unwrap();
             thread::sleep(Duration::from_secs(1));
         }
     });
